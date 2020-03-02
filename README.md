@@ -1,7 +1,7 @@
 # matsar
 Matlab script for performing LMSE calibration/nonlinearity measurements.
 
-### Useful Input Parameters
+## Useful Input Parameters
 
 | Symbol    | Default Value  | Full Name                 |
 |-----------|--------|---------------------------|
@@ -19,7 +19,7 @@ Matlab script for performing LMSE calibration/nonlinearity measurements.
 | mode    | 'AdaDelta' | LMSE SGD method. Valid values are 'AdaDelta','AdaGrad' and 'Constant'.|
 | Gamma    | 0.7 | Tuning parameter for AdaDelta. |
 
-### Useful Output Parameters
+## Useful Output Parameters
 Availabe in Workspace after running the script.
 
 | Symbol    | Default Value  | Full Name                 |
@@ -38,7 +38,7 @@ Availabe in Workspace after running the script.
 | Regs         | [matrix]   | Ideal register values. The nth row is the register for sample n. Each register is a M-element row vector.|
 | Regs_mis         | [matrix]   | Mismatched register values. The nth row is the register for sample n. Each register is a M-element row vector.|
 
-### Sample Output
+## Sample Output
 This sample output is the result of simulating a 12 steps 10-bit SAR ADC (default parameters). Default parasitics are extracted from TSMC 65nm into the 'Cpar_add' array.
 
 ```matlab
@@ -53,27 +53,31 @@ SNR(Cal) = 61.504055
 SFDR(Cal) = 81.749704
 ENOB(Cal) = 9.924262
 ```
-#### Time Domain Waveforms
+### Time Domain Waveforms
 ![Time Domain Waveform](./doc/images/wave.png)
 
-#### FFT Spectrum
+### FFT Spectrum
 ![FFT Spectrum](./doc/images/spectrum.png)
 
-#### Histogram
+### Histogram
 ![Histogram](./doc/images/histogram.png)
 
-#### Differential Non-linearity (DNL)
+### Differential Non-linearity (DNL)
 ![DNL](./doc/images/dnl.png)
 
-#### Integral Non-linearity (INL)
+### Integral Non-linearity (INL)
 ![INL](./doc/images/inl.png)
 
-#### Error
+### Error
 ![Error](./doc/images/error.png)
 
-#### Squared Error
+### Squared Error
 ![Squared Error](./doc/images/sqerror.png)
 
-#### LMSE Trained Weights
+### LMSE Trained Weights
 ![Weights 1](./doc/images/weight1.png)
 ![Weights 2](./doc/images/weight2.png)
+
+## References
+[1] [J. Doernberg, H. -. Lee and D. A. Hodges, "Full-speed testing of A/D converters," in IEEE Journal of Solid-State Circuits, vol. 19, no. 6, pp. 820-827, Dec. 1984.](https://ieeexplore.ieee.org/abstract/document/1052232)
+[2] [Wikipedia contributors. "Coherent sampling." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 2 Jul. 2015. Web. 2 Mar. 2020.](https://en.wikipedia.org/wiki/Coherent_sampling)
