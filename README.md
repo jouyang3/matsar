@@ -80,4 +80,5 @@ ENOB(Cal) = 9.924262
 
 ## References
 [1] [J. Doernberg, H. -. Lee and D. A. Hodges, "Full-speed testing of A/D converters," in IEEE Journal of Solid-State Circuits, vol. 19, no. 6, pp. 820-827, Dec. 1984.](https://ieeexplore.ieee.org/abstract/document/1052232)
+
 [2] [Wikipedia contributors. "Coherent sampling." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 2 Jul. 2015. Web. 2 Mar. 2020.](https://en.wikipedia.org/wiki/Coherent_sampling)
