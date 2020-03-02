@@ -1,5 +1,7 @@
 # matsar
-Matlab script for performing LMSE calibration/nonlinearity measurements.
+Matlab script for performing LMSE calibration/nonlinearity measurements. There are two versions of matsar.
+* **matsar_auto.m**: _automatically calculates required input frequency for coherent sampling [2]. It also calculates minimum samples needed for measuring DNL and INL correctly [1]. Use this if you don't know how to change parameters in the script. The run time of this script is slow due to large number of samples needed._
+* **matsar_manual.m**: _this script does not calculate input frequency to guarantee coherent sampling. It allows users to specify simulation end time (tend) to allow faster convergence. Use this when you are doing layouts to validate redundancies._
 
 ## Useful Input Parameters
 
@@ -39,7 +41,7 @@ Availabe in Workspace after running the script.
 | Regs_mis         | [matrix]   | Mismatched register values. The nth row is the register for sample n. Each register is a M-element row vector.|
 
 ## Sample Output
-This sample output is the result of simulating a 12 steps 10-bit SAR ADC (default parameters). Default parasitics are extracted from TSMC 65nm into the 'Cpar_add' array.
+This sample output is the result of simulating a 12 steps 10-bit SAR ADC (default parameters) using "matsar_auto.m". Default parasitics are extracted from TSMC 65nm into the 'Cpar_add' array.
 
 ```matlab
 Calculated input frequency is F=999928(Hz)
