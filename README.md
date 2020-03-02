@@ -71,15 +71,15 @@ This sample output is the result of simulating a 12 steps 10-bit SAR ADC (defaul
 
 ```matlab
 Calculated input frequency is F=999928(Hz)
-SNR(Ideal) = 61.911478
+SNDR(Ideal) = 61.911478
 SFDR(Ideal) = 84.559386
 ENOB(Ideal) = 9.991940
-SNR(Precal) = 54.433850
-SFDR(Precal) = 62.408115
-ENOB(Precal) = 8.749809
-SNR(Cal) = 61.504055
-SFDR(Cal) = 81.749704
-ENOB(Cal) = 9.924262
+SNDR(Precal) = 48.861151
+SFDR(Precal) = 54.278683
+ENOB(Precal) = 7.824111
+SNDR(Cal) = 60.772993
+SFDR(Cal) = 75.439158
+ENOB(Cal) = 9.802823
 ```
 ### Time Domain Waveforms
 ![Time Domain Waveform](./doc/images/wave.png)
