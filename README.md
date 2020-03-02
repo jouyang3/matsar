@@ -32,13 +32,22 @@ Availabe in Workspace after running the script.
 | Input         | [array]   | Input waveform. |
 | nsampmin         | 1070679   | Number of samples required for DNL/INL measurements. See Doernberg [1]. |
 | numsamp         | 999928   | Number of samples required for DNL/INL measurements. |
-| W         | [array]   | Trained weights. |
+| W         | [matrix]   | Trained weights. |
 | codes_ideal         | [array]   | Ideally converted codes. |
 | codes_precal         | [array]   | Converted codes with mismatch. |
 | codes_cal         | [array]   | Calibrated codes with mismatch. |
 | Rdn         | [array]   | Redundancy at each conversion step. |
 | Regs         | [matrix]   | Ideal register values. The nth row is the register for sample n. Each register is a M-element row vector.|
 | Regs_mis         | [matrix]   | Mismatched register values. The nth row is the register for sample n. Each register is a M-element row vector.|
+| sndrIdeal         | [scalar]   | Ideally converted SNDR. |
+| sfdrIdeal         | [scalar]   | Ideally converted SFDR. |
+| enobIdeal         | [scalar]   | Ideally converted SNDR. |
+| sndrPrecal         | [scalar]   |  SNDR of converted code with capacitative mismatch (pre-calibration). |
+| sfdrPrecal         | [scalar]   |  SFDR of converted code with capacitative mismatch (pre-calibration). |
+| enobPrecal         | [scalar]   |  ENOB of converted code with capacitative mismatch (pre-calibration). |
+| sndrPrecal         | [scalar]   |  SNDR of converted code with capacitative mismatch (calibrated). |
+| sfdrPrecal         | [scalar]   |  SFDR of converted code with capacitative mismatch (calibrated). |
+| enobPrecal         | [scalar]   |  ENOB of converted code with capacitative mismatch (calibrated). |
 
 ## Plot Controls
 

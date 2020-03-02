@@ -281,15 +281,15 @@ fftr = abs(fft(codes_ideal.*1.2/1024.*Win))/numsamp;
 fftr = max(noise,fftr(1:floor(numsamp/2)));
 
 if ShowSNDR
-    snrIdeal = dbv(SNR(fftr));
-    fprintf('SNR(Ideal) = %f\n',snrIdeal);
+    sndrIdeal = dbv(SNDR(fftr));
+    fprintf('SNDR(Ideal) = %f\n',sndrIdeal);
 end
 if ShowSFDR
     sfdrIdeal = dbv(SFDR(fftr));
     fprintf('SFDR(Ideal) = %f\n',sfdrIdeal);
 end
 if ShowENOB
-    enobIdeal = (dbv(SNR(fftr))-1.76)./6.02;
+    enobIdeal = (dbv(SNDR(fftr))-1.76)./6.02;
     fprintf('ENOB(Ideal) = %f\n',enobIdeal);
 end
 if ShowSpectrum
@@ -303,15 +303,15 @@ end
 fftr = abs(fft(codes_precal.*1.2/1024.*Win,numsamp)/numsamp);
 fftr = max(noise,fftr(1:floor(numsamp/2)));
 if ShowSNDR
-    snrPrecal = dbv(SNR(fftr));
-    fprintf('SNR(Precal) = %f\n',snrPrecal);
+    sndrPrecal = dbv(SNDR(fftr));
+    fprintf('SNDR(Precal) = %f\n',sndrPrecal);
 end
 if ShowSFDR
     sfdrPrecal = dbv(SFDR(fftr));
     fprintf('SFDR(Precal) = %f\n',sfdrPrecal);
 end
 if ShowENOB
-    enobPrecal = (dbv(SNR(fftr))-1.76)./6.02;
+    enobPrecal = (dbv(SNDR(fftr))-1.76)./6.02;
     fprintf('ENOB(Precal) = %f\n',enobPrecal);
 end
 if ShowSpectrum
@@ -324,15 +324,15 @@ end
 fftr = abs(fft(codes_cal.*1.2/1024.*Win,numsamp)/numsamp);
 fftr = max(noise,fftr(1:floor(numsamp/2)));
 if ShowSNDR
-    snrCal = dbv(SNR(fftr));
-    fprintf('SNR(Cal) = %f\n',snrCal);
+    sndrCal = dbv(SNDR(fftr));
+    fprintf('SNDR(Cal) = %f\n',sndrCal);
 end
 if ShowSFDR
     sfdrCal = dbv(SFDR(fftr));
     fprintf('SFDR(Cal) = %f\n',sfdrCal);
 end
 if ShowENOB
-    enobCal = (dbv(SNR(fftr))-1.76)./6.02;
+    enobCal = (dbv(SNDR(fftr))-1.76)./6.02;
     fprintf('ENOB(Cal) = %f\n',enobCal);
 end
 if ShowSpectrum
