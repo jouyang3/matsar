@@ -24,11 +24,12 @@ clear;
 mode = 'AdaDelta';  % Enables either, Constant, AdaGrad or AdaDelta
 mu = 1e-4; % Initial learning rate.
 
-tend = 5.2e-3;
+Fs = 200e6;
+F = 1e6;
+
 C_mask = logical([1,1,1,1,1,1,1,1,1,1,1,1,1]);
 Cpar_mult = [1,1,1,1,1,1,1,1,1,1,1,1,1];
 Cpar_add = [0,0,0,-1.3013e-15,-5.12e-16,-2.775e-16,-9.41e-17,2.615e-17,6.371e-17,9.213e-17,6.607e-17,8.628e-17,1.10716e-16];
-%Cpar_add = [0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 Cmin = 1e-15;
 FullScale = 1.2;
@@ -50,13 +51,34 @@ Rdn = Rdn./Cmin;
 
 kT = 1.38064852e-23*350; %T=350K
 
-fs = 204.8e6; ts = 1/fs;
-numsamp = floor(tend/ts);
-t = linspace(0,tend-ts,numsamp);
-rbw = fs/numsamp;
+% minimum number of samples required for DNL
+nsampmin = 2.58^2*pi*2^9/0.1^2;
 
-f = 1e6; w = 2*pi*f; Vcm = FullScale/2;
-Input = (FullScale*1/2)*(sin(w*t))+Vcm;
+Ts = 1/Fs;
+Mcycle = 1;
+Nti = 0;
+while 1
+    Nt = 2^Nti;
+    if Nt > nsampmin
+        Mcycle = floor(F/Fs*Nt);
+        if mod(Mcycle,2) == 0
+            Mcycle = Mcycle+1;
+        end
+        break;
+    end
+    Nti=Nti+1;
+end
+
+F = Mcycle/Nt*Fs;
+
+fprintf('Calculated input frequency is F=%.0f(Hz)\n',F);
+numsamp = Nt;
+tend = numsamp*Ts;
+t = linspace(0,tend-Ts,numsamp);
+rbw = Fs/numsamp;
+
+w = 2*pi*F; Vcm = FullScale/2;
+Input = (FullScale/2)*(sin(w*t))+Vcm;
 
 W = ones(numsamp,M);
 Regs = zeros(numsamp,M);
@@ -109,6 +131,7 @@ end
 
 
 %% Plot section
+Windowing = 1;
 ShowWeights = 1; % Shows weight history
 ShowError = 1;  % Shows error history
 ShowSE = 1;
@@ -132,12 +155,12 @@ if ShowWave
     subplot(2,1,1);
     plot(t,codes_precal,'-'); hold on;
     plot(t,codes_ideal,':');
-    xlim([1/f,3/f]); title('Precal');
+    xlim([1/F,3/F]); title('Precal');
     hold  off; legend('PreCal','Ideal');
     subplot(2,1,2);
     plot(t,codes_cal,'-'); hold  on;
     plot(t,codes_ideal,':');
-    xlim([1/f,3/f]); title('Cal');
+    xlim([1/F,3/F]); title('Cal');
     hold  off; legend('Cal','Ideal');
 end
 
@@ -272,8 +295,12 @@ if ShowINL
     ylabel('INL'); xlabel('Code');
 end
 
-fftr = abs(fft(codes_ideal.*1.2/1024,numsamp)/numsamp);
-fftr = max(noise,fftr(1:floor(numsamp/2)));
+Win = ones(1,numsamp);
+if Windowing
+    Win = blackman(numsamp)';
+end
+fftr = abs(fft(codes_ideal.*1.2/1024.*Win))/numsamp;
+fftr = max(noise,fftr(1:numsamp/2));
 if ShowSNR
     snrIdeal = dbv(SNR(fftr));
     fprintf('SNR(Ideal) = %f\n',snrIdeal);
@@ -288,14 +315,14 @@ if ShowENOB
 end
 if ShowSpectrum
     figure
-    f=(0:numsamp/2-1)*fs/numsamp;
+    f = (0:Fs/numsamp:Fs/2-Fs/numsamp);
     subplot(3,1,1);
     plot(f,dbv(fftr));  title('Ideal');
-    ylim([-120,0]);
+    ylim([-150,0]); xlim([0,50*F]);
 end
 
-fftr = abs(fft(codes_precal.*1.2/1024,numsamp)/numsamp);
-fftr = max(noise,fftr(1:floor(numsamp/2)));
+fftr = abs(fft(codes_precal.*1.2/1024.*Win))/numsamp;
+fftr = max(noise,fftr(1:numsamp/2));
 if ShowSNR
     snrPrecal = dbv(SNR(fftr));
     fprintf('SNR(Precal) = %f\n',snrPrecal);
@@ -311,12 +338,12 @@ end
 if ShowSpectrum
     subplot(3,1,2);
     plot(f,dbv(fftr));  title('Precal');
-    ylim([-120,0]);
+    ylim([-150,0]); xlim([0,50*F]);
 end
 
 
-fftr = abs(fft(codes_cal.*1.2/1024,numsamp)/numsamp);
-fftr = max(noise,fftr(1:floor(numsamp/2)));
+fftr = abs(fft(codes_cal.*1.2/1024.*Win))/numsamp;
+fftr = max(noise,fftr(1:numsamp/2));
 if ShowSNR
     snrCal = dbv(SNR(fftr));
     fprintf('SNR(Cal) = %f\n',snrCal);
@@ -332,7 +359,7 @@ end
 if ShowSpectrum
     subplot(3,1,3);
     plot(f,dbv(fftr));  title('Cal');
-    ylim([-120,0]);
+    ylim([-150,0]); xlim([0,50*F]);
 end
 
 if ShowWeights
@@ -345,4 +372,3 @@ if ShowWeights
         title(['W',num2str(M-k)]);
     end
 end
-%lows =  Regs_mis(Regs_mis(:,1)==0,:);
