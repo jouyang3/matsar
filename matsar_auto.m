@@ -137,7 +137,7 @@ ShowError = 1;  % Shows error history
 ShowSE = 1;
 ShowWave = 1; % Shows time domain waveforms.
 ShowSpectrum = 1; % Shows spectra.
-ShowSNR = 1; % Shows SNR
+ShowSNDR = 1; % Shows SNR
 ShowSFDR = 1; % Shows SFDR
 ShowENOB = 1; % Shows ENOB
 ShowDNL = 1;
@@ -301,7 +301,7 @@ if Windowing
 end
 fftr = abs(fft(codes_ideal.*1.2/1024.*Win))/numsamp;
 fftr = max(noise,fftr(1:numsamp/2));
-if ShowSNR
+if ShowSNDR
     snrIdeal = dbv(SNR(fftr));
     fprintf('SNR(Ideal) = %f\n',snrIdeal);
 end
@@ -323,7 +323,7 @@ end
 
 fftr = abs(fft(codes_precal.*1.2/1024.*Win))/numsamp;
 fftr = max(noise,fftr(1:numsamp/2));
-if ShowSNR
+if ShowSNDR
     snrPrecal = dbv(SNR(fftr));
     fprintf('SNR(Precal) = %f\n',snrPrecal);
 end
@@ -344,7 +344,7 @@ end
 
 fftr = abs(fft(codes_cal.*1.2/1024.*Win))/numsamp;
 fftr = max(noise,fftr(1:numsamp/2));
-if ShowSNR
+if ShowSNDR
     snrCal = dbv(SNR(fftr));
     fprintf('SNR(Cal) = %f\n',snrCal);
 end

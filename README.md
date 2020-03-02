@@ -40,6 +40,23 @@ Availabe in Workspace after running the script.
 | Regs         | [matrix]   | Ideal register values. The nth row is the register for sample n. Each register is a M-element row vector.|
 | Regs_mis         | [matrix]   | Mismatched register values. The nth row is the register for sample n. Each register is a M-element row vector.|
 
+## Plot Controls
+
+| Symbol    | Default Value  | Full Name                 |
+|-----------|--------|---------------------------|
+| Windowing         | 1   | 1: Blackman window. 0: Rect window. |
+| ShowWeights        | 1 | Show weights convergence over time.|
+| ShowError | 1   | Show error over time.  |
+| ShowSE         | 1     | Show squared error over time.               |
+| ShowWave         | 1     | Show time domain waveform  |
+| ShowSpectrum      | 1    | Show frequency spectrum		     |
+| ShowHistogram    | 1 | Show normalized code histogram. |
+| ShowSNDR      | 1    | Show Signal-to-Noise-and-Distortion ratio.		     |
+| ShowSFDR    | 1 | Show Spurious Free Dynamic Range. |
+| ShowENOB    | 1 | Show effective number of bits. |
+| ShowDNL    | 1 | Show Differential Non-Linearity. |
+| ShowINL    | 1 | Show Integral Non-Linearity. |
+
 ## Sample Output
 This sample output is the result of simulating a 12 steps 10-bit SAR ADC (default parameters) using "matsar_auto.m". Default parasitics are extracted from TSMC 65nm into the 'Cpar_add' array.
 
