@@ -24,7 +24,7 @@ clear;
 mode = 'AdaDelta';  % Enables either, Constant, AdaGrad or AdaDelta
 mu = 1e-4; % Initial learning rate.
 
-tend = 5.2e-3;
+tend = 1e-3;
 C_mask = logical([1,1,1,1,1,1,1,1,1,1,1,1,1]);
 Cpar_mult = [1,1,1,1,1,1,1,1,1,1,1,1,1];
 Cpar_add = [0,0,0,-1.3013e-15,-5.12e-16,-2.775e-16,-9.41e-17,2.615e-17,6.371e-17,9.213e-17,6.607e-17,8.628e-17,1.10716e-16];
@@ -109,6 +109,7 @@ end
 
 
 %% Plot section
+Windowing = 1;
 ShowWeights = 1; % Shows weight history
 ShowError = 1;  % Shows error history
 ShowSE = 1;
@@ -117,9 +118,9 @@ ShowSpectrum = 1; % Shows spectra.
 ShowSNDR = 1; % Shows SNR
 ShowSFDR = 1; % Shows SFDR
 ShowENOB = 1; % Shows ENOB
-ShowDNL = 1;
-ShowHistogram = 1;
-ShowINL = 1;
+ShowDNL = 0;
+ShowHistogram = 0;
+ShowINL = 0;
 
 dbv=@(v) 20.*log10(abs(v));
 noise = 4*kT/CT/numsamp;
@@ -272,8 +273,13 @@ if ShowINL
     ylabel('INL'); xlabel('Code');
 end
 
-fftr = abs(fft(codes_ideal.*1.2/1024,numsamp)/numsamp);
+Win = ones(1,numsamp);
+if Windowing
+    Win = blackman(numsamp)';
+end
+fftr = abs(fft(codes_ideal.*1.2/1024.*Win))/numsamp;
 fftr = max(noise,fftr(1:floor(numsamp/2)));
+
 if ShowSNDR
     snrIdeal = dbv(SNR(fftr));
     fprintf('SNR(Ideal) = %f\n',snrIdeal);
@@ -294,7 +300,7 @@ if ShowSpectrum
     ylim([-120,0]);
 end
 
-fftr = abs(fft(codes_precal.*1.2/1024,numsamp)/numsamp);
+fftr = abs(fft(codes_precal.*1.2/1024.*Win,numsamp)/numsamp);
 fftr = max(noise,fftr(1:floor(numsamp/2)));
 if ShowSNDR
     snrPrecal = dbv(SNR(fftr));
@@ -315,7 +321,7 @@ if ShowSpectrum
 end
 
 
-fftr = abs(fft(codes_cal.*1.2/1024,numsamp)/numsamp);
+fftr = abs(fft(codes_cal.*1.2/1024.*Win,numsamp)/numsamp);
 fftr = max(noise,fftr(1:floor(numsamp/2)));
 if ShowSNDR
     snrCal = dbv(SNR(fftr));
