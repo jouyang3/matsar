@@ -65,6 +65,7 @@ Availabe in Workspace after running the script.
 | ShowENOB    | 1 | Show effective number of bits. |
 | ShowDNL    | 1 | Show Differential Non-Linearity. |
 | ShowINL    | 1 | Show Integral Non-Linearity. |
+| To10Bits    | 1 | Converts weighted codes to 10 bit discretized values. |
 
 ## Sample Output
 This sample output is the result of simulating a 12 steps 10-bit SAR ADC (default parameters) using "matsar_auto.m". Default parasitics are extracted from TSMC 65nm into the 'Cpar_add' array.
