@@ -284,8 +284,8 @@ if ShowINL
     
     subplot(3,1,1);
     INLideal = zeros(1,1023);
-    for ii = 2:1024
-        INLideal(ii) = sum(DNLideal(1:ii-1));
+    for ii = 1:1023
+        INLideal(ii) = (VbinsIdeal(ii+1)-VbinsIdeal(1))/(VbinsIdeal(1024)-VbinsIdeal(1))*1023 - ii;
     end
     plot(INLideal);
     grid on;
@@ -294,8 +294,8 @@ if ShowINL
     
     subplot(3,1,2);
     INLprecal = zeros(1,1023);
-    for ii = 2:1024
-        INLprecal(ii) = sum(DNLprecal(1:ii-1));
+    for ii = 1:1023
+        INLprecal(ii) = (VbinsPrecal(ii+1)-VbinsPrecal(1))/(VbinsPrecal(1024)-VbinsPrecal(1))*1023 - ii;
     end
     plot(INLprecal);
     grid on;
@@ -304,8 +304,8 @@ if ShowINL
     
     subplot(3,1,3);
     INLcal = zeros(1,1023);
-    for ii = 2:1024
-        INLcal(ii) = sum(DNLcal(1:ii-1));
+    for ii = 1:1023
+        INLcal(ii) = (VbinsCal(ii+1)-VbinsCal(1))/(VbinsCal(1024)-VbinsCal(1))*1023 - ii;
     end
     plot(INLcal);
     grid on;
